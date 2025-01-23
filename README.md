@@ -14,8 +14,26 @@ DB_HOST=localhost
 
 DB_PORT=5432
 
-pip install django-redis
+- pip install Django psycopg2 Pillow django-environ
+- pip install django-redis
+- pip install setuptools(Асинхронно)
 
-- toolbar
+Красивые цвета в админке
 
-  pip install setuptools(Асинхронно)
+- pip install django-admin-interface
+  Add admin_interface and colorfield to settings.INSTALLED_APPS before django.contrib.admin
+
+INSTALLED_APPS = (
+#...
+"admin_interface",
+"colorfield",
+#...
+"django.contrib.admin",
+#...
+)
+
+Run python manage.py migrate
+
+Run python manage.py collectstatic --clear
+
+Restart your application server

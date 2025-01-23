@@ -13,6 +13,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    # Админка
+    "admin_interface",
+    "colorfield",
+    # Стандартные приложения
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
