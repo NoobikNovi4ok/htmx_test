@@ -23,21 +23,28 @@ DB_PORT=5432
 
 <b>Красивые цвета в админке</b>
 
-- pip install django-admin-interface
+- <b>pip install django-admin-interface</b>
 
-  Add admin_interface and colorfield to settings.INSTALLED_APPS before django.contrib.admin
+- Add <b>admin_interface</b> and <b>colorfield</b> to <b>settings.INSTALLED_APPS</b> before <b>django.contrib.admin</b>
 
   INSTALLED_APPS = (
+
   #...
+
   "admin_interface",
+
   "colorfield",
+
   #...
+
   "django.contrib.admin",
+
   #...
+
   )
 
-  Run python manage.py migrate
+  - Run <b>python manage.py migrate</b>
 
-  Run python manage.py collectstatic --clear
+  - Run <b>python manage.py collectstatic --clear</b>
 
-  Restart your application server
+  - Restart your application server
