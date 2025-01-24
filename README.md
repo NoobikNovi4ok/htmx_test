@@ -15,40 +15,28 @@ DB_PORT=5432
 
 2. Загрузки
 
-- pip install Django psycopg2 Pillow django-environ
-- pip install -U djlint. Необходим для форматирования кода в файлах django-html
-- pip install ~sorl-thumbnail~. Для изображений из видео
-- pip install easy-thumbnails. Использую для изображений, так как тут можно использовать _THUMBNAIL_ALIASES_
-- pip install django-redis
-- pip install setuptools(Асинхронно)
+**_Не бойтесь смотреть за что отвечают те или иные библиотеки_**
 
-3. Красивая админка Django</b>
+- `Django psycopg2 Pillow django-environ` - В начале проекта требуется
+- `-U djlint` - Необходим для форматирования кода в файлах django-html, также смотри [тык](#важные)
+- `~sorl-thumbnail~` - Для изображений из видео
+- `easy-thumbnails` - Использую для изображений, так как тут можно использовать _THUMBNAIL_ALIASES_
+- `django-redis redis` - Кэширование Redis
+- `setuptools`- Для асинхронного кода
+- `django-admin-interface` - Красивая админ панель
+- **_`pip install Django psycopg2 Pillow django-environ easy-thumbnails django-redis redis django-admin-interface` - Общая команда_**
 
-- Написать в консоль команду `pip install django-admin-interface`
+3. Команды для запуска
 
-- Добавить _admin_interface_ и _colorfield_ в _settings.INSTALLED_APPS_ до _django.contrib.admin_
+- Ввести в терминал `python manage.py createsuperuser` - Для создания админа
 
-```markdown
-INSTALLED_APPS = (
-#...
-"admin_interface",
-"colorfield",
-#...
-"django.contrib.admin",
-#...
-)
-```
+- Если что `python manage.py makemigrations` - Для создания миграций
 
-- Ввести в терминал `python manage.py migrate`
+- Ввести в терминал `python manage.py migrate` - Для создания таблиц в базе данных
 
-- Ввести в терминал `python manage.py collectstatic`.
+- Ввести в терминал `python manage.py runserver` - Для запуска сервера
 
-- Можно также добавить опцию `--clear` в конце:
-
-  - Опция --clear указывает Django сначала удалить все файлы в директории STATIC_ROOT, прежде чем собирать новые статические файлы;
-  - Использование --clear поможет избежать путаницы с устаревшими файлами, которые могут остаться в STATIC_ROOT.
-
-- Можно перезапустить сервер
+- Также не забываем заходить в _Админ панель_, так как там мы и создаем категории и товары
 
 ## Используемые технологии в ходе разработки
 
@@ -62,6 +50,9 @@ INSTALLED_APPS = (
 - ~SQLITE~
 
 ## Мои расширения в VSCODE
+
+По существу для использования расширений необходимы настройки в файле settings.json самого VSCode'а.
+Свои настройки я прикреплю. Можно найти по =>
 
 ### Важные
 
