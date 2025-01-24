@@ -57,13 +57,26 @@ class Category(models.Model):
             self.slug = slugify(rand_slug() + "-pickBetter" + self.name)
         super(Category, self).save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     return reverse("model_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        """
+        Get the absolute URL for the category.
+
+        This method generates the URL for the category list view of this category.
+        It uses the 'shop:category-list' URL pattern and includes the category's slug
+        as an argument.
+
+        Returns:
+            str: The absolute URL for the category list view of this category.
+        """
+        return reverse("shop:category-list", args=[str(self.slug)])
 
 
 class Product(models.Model):
     category = models.ForeignKey(
-        to=Category, on_delete=models.CASCADE, related_name="products"
+        to=Category,
+        on_delete=models.CASCADE,
+        related_name="products",
+        verbose_name="Категория",
     )
     title = models.CharField(max_length=250, verbose_name="Название")
     brand = models.CharField(max_length=250, verbose_name="Бренд")
@@ -86,8 +99,8 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.title}"
 
-    # def get_absolute_url(self):
-    #     return reverse("model_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("shop:product-detail", args=[str(self.slug)])
 
 
 class ProductManager(models.Manager):

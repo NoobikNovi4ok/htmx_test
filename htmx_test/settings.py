@@ -1,5 +1,7 @@
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 import environ
+import os
 
 env = environ.Env()
 environ.Env.read_env()  # Читает .env файл
@@ -13,6 +15,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    # THUMBNAILS
+    # "sorl.thumbnail", # Как в видео
+    "easy_thumbnails",
     # Админка
     "admin_interface",
     "colorfield",
@@ -30,6 +35,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # Для локализации
+    "django.middleware.locale.LocaleMiddleware",
+    #
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -50,6 +58,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # Context for categories
+                "shop.context_processors.categories",
             ],
         },
     },
@@ -98,13 +108,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Для локализации
+LANGUAGE_CODE = "ru"
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
+LANGUAGES = [
+    ("en", _("English")),
+    ("ru", _("Russian")),
+    # добавьте другие языки по мере необходимости
+]
 
-LANGUAGE_CODE = "en-us"
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, "locale"),
+]
+#
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -134,3 +152,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # LOGIN_URL = "/user/login/"
 # LOGIN_REDIRECT_URL = "/user/profile"
+
+# Например, вы можете установить размеры миниатюр по умолчанию: ДЛЯ easy-thumbnails
+THUMBNAIL_ALIASES = {
+    "": {
+        "small": {"size": (100, 100), "crop": True},
+        "medium": {"size": (300, 300), "crop": True},
+        "large": {"size": (600, 600), "crop": True},
+    },
+}

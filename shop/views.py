@@ -5,7 +5,7 @@ from shop.models import Category, ProductProxy
 
 def products_view(request):
     products = ProductProxy.objects.all()
-    return render(request, "base.html", {"products": products})
+    return render(request, "shop/products.html", {"products": products})
 
 
 def products_detail_view(request, slug):

@@ -4,6 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    # Локализация
+    path("i18n/", include("django.conf.urls.i18n")),
+    #
     path("admin/", admin.site.urls),
     path("shop/", include("shop.urls", namespace="shop")),
 ]
