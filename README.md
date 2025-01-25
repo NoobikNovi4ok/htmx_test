@@ -2,7 +2,7 @@
 
 ## Необходимые действия для запуска проекта
 
-1. Для того чтобы начать работу нужно создать файл в `htmx_test` ( рядом с файлом `settings.py` ) - `.env` и в нем написать:
+1. **Для того чтобы начать работу нужно создать файл в `htmx_test` ( рядом с файлом `settings.py` ) - `.env` и в нем написать:**
 
 ```markdown
 SECRET_KEY=''
@@ -13,20 +13,21 @@ DB_HOST=localhost
 DB_PORT=5432
 ```
 
-2. Загрузки
+2. **Загрузки**
 
-**_Не бойтесь смотреть за что отвечают те или иные библиотеки_**
+   _Не бойтесь смотреть за что отвечают те или иные библиотеки_
 
 - `Django psycopg2 Pillow django-environ` - В начале проекта требуется
 - `-U djlint` - Необходим для форматирования кода в файлах django-html, также смотри [тык](#важные)
-- `~sorl-thumbnail~` - Для изображений из видео
+- ~`sorl-thumbnail`~ - Для изображений из видео
 - `easy-thumbnails` - Использую для изображений, так как тут можно использовать _THUMBNAIL_ALIASES_
 - `django-redis redis` - Кэширование Redis
 - `setuptools`- Для асинхронного кода
 - `django-admin-interface` - Красивая админ панель
-- **_`pip install Django psycopg2 Pillow django-environ easy-thumbnails django-redis redis django-admin-interface` - Общая команда_**
+- `django-mathfilters` - Для математических вычислений в шаблонах Django
+- **_`pip install Django psycopg2 Pillow django-environ easy-thumbnails django-redis redis django-admin-interface django-mathfilters` - Общая команда_**
 
-3. Команды для запуска
+3. **Команды для запуска**
 
 - Ввести в терминал `python manage.py createsuperuser` - Для создания админа
 

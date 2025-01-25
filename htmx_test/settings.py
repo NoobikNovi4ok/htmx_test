@@ -15,6 +15,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    # Mathfilters
+    "mathfilters",
     # THUMBNAILS
     # "sorl.thumbnail", # Как в видео
     "easy_thumbnails",
@@ -30,6 +32,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps
     "shop.apps.ShopConfig",
+    "cart.apps.CartConfig",
+    "recommend",
 ]
 
 MIDDLEWARE = [
@@ -60,6 +64,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 # Context for categories
                 "shop.context_processors.categories",
+                # Context for carts
+                "cart.context_processors.cart",
             ],
         },
     },
