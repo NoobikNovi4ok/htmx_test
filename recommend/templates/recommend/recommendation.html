@@ -61,12 +61,12 @@
     }
 </style>
 <div class="reviews-container">
-    <h2 class="reviews-title">Reviews</h2>
+    <h2 class="reviews-title">Обзоры</h2>
     {% if request.user.is_authenticated %}
         <form method="post" class="review-form">
             {% csrf_token %}
             <div>
-                <label for="rating">Rating</label>
+                <label for="rating">Оценка</label>
                 <br>
                 <select name="rating" id="rating">
                     <option value="1">1</option>
@@ -77,12 +77,12 @@
                 </select>
             </div>
             <div>
-                <label for="content">Comment</label>
+                <label for="content">Комментарий</label>
                 <br>
                 <textarea name="content" id="content" rows="5" cols="50"></textarea>
             </div>
             <div>
-                <button>Submit</button>
+                <button>Добавить обзор</button>
             </div>
         </form>
     {% endif %}
@@ -90,14 +90,9 @@
         <div class="d-flex flex-row bd-highlight mb-3 justify-content-between review "
              id="review-{{ review.id }}">
             <div>
-                <strong>Date:</strong> {{ review.created_at|date:"Y-m-d" }}
-                <br>
-                <br>
-                <strong>Rating:</strong> {{ review.rating }}/5
-                <br>
-                <strong>Comment:</strong>
-                <br>
-                {{ review.content }}
+                <p class="fw-bolder py-1">Дата: {{ review.created_at|date:"Y-m-d" }}</p>
+                <p class="fw-bolder py-1">Оценка: {{ review.rating }}/5</p>
+                <p class="fw-bolder py-1">Комментарий: {{ review.content }}</p>
             </div>
             {%  comment %}
         <div>

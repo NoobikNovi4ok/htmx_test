@@ -52,3 +52,7 @@ a {
     text-align: center;
   }
 }
+
+.card_from_category {
+  cursor: pointer;
+}

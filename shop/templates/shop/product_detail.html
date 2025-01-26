@@ -11,22 +11,25 @@
                     <!-- Product image -->
                 </div>
                 <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
-                    <h1 class="mb-0 h4">{{ product.title }}</h1>
-                    <strong>{{ product.brand }}</strong>
+                    <div>
+                        <h1 class="mb-0 h4">{{ product.title }}</h1>
+                        <p class="fw-bolder py-1">{{ product.brand }}</p>
+                    </div>
                     <hr>
-                    <br>
-                    <p>{{ product.description }}</p>
+                    <div class="py-2">
+                        <p>{{ product.description|capfirst }}</p>
+                    </div>
                     <div class="border">
                         <div class="col border-bottom">
                             <div class="row p-3">
-                                <div class="col-6">Price</div>
+                                <div class="col-6 h3">Цена</div>
                                 {% if product.discount %}
                                     <div class="col-6 text-end">
-                                        <span class="text-decoration-line-through fw-bold text-danger">$ {{ product.price }} <span class="badge rounded-pill bg-info">discount</span></span> <span class="h4 fw-bold">$ {{ product.get_discounted_price }}</span>
+                                        <span class="text-decoration-line-through fw-bold text-danger">₽ {{ product.price }} <span class="badge rounded-pill bg-info">скидка</span></span> <span class="h4 fw-bold">₽ {{ product.get_discounted_price }}</span>
                                     </div>
                                 {% else %}
                                     <div class="col-6 text-end">
-                                        <span class="h4 fw-bold">$ {{ product.price }}</span>
+                                        <span class="h4 fw-bold">₽ {{ product.price }}</span>
                                     </div>
                                 {% endif %}
                             </div>
@@ -34,7 +37,7 @@
                         <div class="col">
                             <div class="row p-3">
                                 <div class="col-6">
-                                    <label for="select">Qty</label>
+                                    <label for="select">Количество</label>
                                     &nbsp;
                                     <select id="select">
                                         <option value="1">1</option>
@@ -47,7 +50,9 @@
                                     <button type="button"
                                             id="add-button"
                                             value="{{ product.id }}"
-                                            class="btn btn-secondary btn-sm">Add to cart</button>
+                                            data-url="{% url "cart:add-to-cart" %}"
+                                            data-csrf="{{ csrf_token }}"
+                                            class="btn btn-outline-success btn-md">Добавить в корзину</button>
                                 </div>
                             </div>
                         </div>
@@ -56,36 +61,6 @@
             </div>
         </main>
         <br>
-        {% include 'recommend/recommendation.html' %}
+        {% include "recommend/recommendation.html" %}
     </div>
-    <script>
-    $(document).on('click', '#add-button', function (e) {
-        e.preventDefault();
-
-        $.ajax({
-            type: 'POST',
-            url: {% url "cart:add-to-cart" %},
-            data: {
-                product_id: $('#add-button').val(),
-                product_qty: $('#select option:selected').text(),
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                action: 'post'
-            },
-            success: function (response) {
-                document.getElementById('lblCartCount').textContent = response.qty
-                const add_button = document.getElementById('add-button')
-                add_button.disabled = true
-                add_button.innerText = "Added to cart"
-                add_button.className = "btn btn-success btn-sm"
-
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        })
-
-    })
-
-
-    </script>
 {% endblock content %}

@@ -136,10 +136,10 @@
             {% endif %}
         {% endfor %}
     </ul>
-    {% comment %} <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" href="#"> <i class="fa fa-shopping-cart" aria-hidden="true"> </i> Cart</a>
-            <a class="nav-link mx-2 text-uppercase" href="{% url 'cart:cart-view' %}"> <i class="fa fa-shopping-cart" aria-hidden="true"> </i> Cart
+            <a class="nav-link mx-2 text-uppercase"
+               href="{% url 'cart:cart-view' %}"> <i class="fa fa-shopping-cart" aria-hidden="true"> </i> Cart
                 <span id="lblCartCount" class="badge badge-warning ">
                     {% with cart_qty=cart|length %}
                         {% if cart_qty > 0 %}
@@ -154,12 +154,13 @@
         <li class="nav-item">
             <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i> Account</a>
         </li>
-    </ul> {% endcomment %}
+    </ul>
 </div>
 </div>
 </nav>
 {% block content %}
-{% endblock %}
+{% endblock content %}
 </body>
 <script src="{% static 'script/script.js'%}"></script>
+<script src="{% static 'script/ajax.js'%}"></script>
 </html>
