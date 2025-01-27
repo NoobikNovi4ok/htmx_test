@@ -19,7 +19,7 @@ DB_PORT=5432
 
 - `Django psycopg2 Pillow django-environ` - В начале проекта требуется
 - `-U djlint` - Необходим для форматирования кода в файлах django-html, также смотри [тык](#важные)
-- ~`sorl-thumbnail`~ - Для изображений из видео
+- ~`sorl-thumbnail`~ - Для изображений, тут есть прикольные margin'ы
 - `easy-thumbnails` - Использую для изображений, так как тут можно использовать _THUMBNAIL_ALIASES_
 - `django-redis redis` - Кэширование Redis
 - `setuptools`- Для асинхронного кода

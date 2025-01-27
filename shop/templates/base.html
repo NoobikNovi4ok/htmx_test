@@ -1,9 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="ru">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- CSRF Token -->
+        {% comment %} <meta name="csrf-token" content="{{ csrf_token }}"> {% endcomment %}
         <!-- CSS -->
         <link rel="stylesheet"
               href="https://bootswatch.com/5/flatly/bootstrap.min.css" />
@@ -30,7 +32,7 @@
                 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
                 crossorigin="anonymous"></script>
         <link rel="stylesheet" href={% static "style/css/style.css" %} />
-        <title>Invincible</title>
+        <title>Неуязвимый</title>
     </head>
     <body>
         <div class="superNav border-bottom py-2 bg-light">
@@ -51,116 +53,112 @@
         </div>
     </div>
 </div>
-<nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm ">
-    <div class="container">
-    <a class="navbar-brand" href="{% url 'shop:products' %}"><i class="fa-solid fa-shop me-2"></i>
-    <strong>Invincible</strong></a>
-<button class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-</button>
-<div class="mx-auto my-3 d-lg-none d-sm-block d-xs-block">
-    <div class="input-group">
-        <span class="border-success input-group-text bg-success text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
-        <input type="text"
-               class="form-control border-success"
-               style="color: #7a7a7a" />
-        <button class="btn btn-success text-white">Search</button>
-    </div>
-</div>
-<div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <div class="ms-auto d-none d-lg-block">
-        <div class="input-group">
-            <span class="border-success input-group-text bg-success text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
-            <input type="text"
-                   class="form-control border-success"
-                   style="color: #7a7a7a" />
-            <button class="btn btn-success text-white">Search</button>
+<nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-2 shadow-sm">
+    <div class="container text-center">
+        <div class="d-flex flex-wrap">
+            <a class="navbar-brand" href="{% url 'shop:products' %}">
+                <i class="fa-solid fa-shop"></i>
+                <p class="fw-bolder">Неуязвимый</p>
+            </a>
+        </div>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-evenly"
+             id="navbarNavDropdown">
+            <div class="d-none d-lg-block">
+                <div class="input-group">
+                    <span class="border-success input-group-text bg-success text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text"
+                           class="form-control border-success"
+                           style="color: #7a7a7a" />
+                    <button class="btn btn-success text-white">Поиск</button>
+                </div>
+            </div>
+            <ul class="navbar-nav">
+                {% for i in categories %}
+                    {% if not i.children.all %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ i.get_absolute_url }}">{{ i.name|upper }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               href="{{ i.get_absolute_url }}"
+                               id="navbarDropdownMenuLink"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">{{ i.name|upper }}</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                {% for obj in i.children.all %}
+                                    {% if not obj.children.all %}
+                                        <li>
+                                            <a class="dropdown-item" href="{{ obj.get_absolute_url }}">{{ obj.name|upper }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle"
+                                               href="{{ obj.get_absolute_url }}">{{ obj.name|upper }}</a>
+                                            <ul class="dropdown-menu">
+                                                {% for subobj in obj.children.all %}
+                                                    {% if not subobj.children.all %}
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ subobj.get_absolute_url }}">{{ subobj.name|upper }}</a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li class="dropdown-submenu">
+                                                            <a class="dropdown-item dropdown-toggle"
+                                                               href="{{ subobj.get_absolute_url }}">{{ subobj.name|upper }}</a>
+                                                            <ul class="dropdown-menu">
+                                                                {% for lastobj in subobj.children.all %}
+                                                                    <li>
+                                                                        <a class="dropdown-item" href="{{ lastobj.get_absolute_url }}">{{ lastobj.name|upper }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 text-uppercase"
+                       href="{% url 'cart:cart-view' %}"> <i class="fa fa-shopping-cart" aria-hidden="true"> </i> Cart
+                        <span id="lblCartCount" class="badge badge-warning">
+                            {% with cart_qty=cart.our_len %}
+                                {% if cart_qty > 0 %}
+                                    {{ cart_qty }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% endwith %}
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i> Account</a>
+                </li>
+            </ul>
         </div>
     </div>
-    <ul class="navbar-nav ms-auto">
-        {% for i in categories %}
-            {% if not i.children.all %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ i.get_absolute_url }}">{{ i.name|upper }}</a>
-                </li>
-            {% else %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="{{ i.get_absolute_url }}"
-                       id="navbarDropdownMenuLink"
-                       data-toggle="dropdown"
-                       aria-haspopup="true"
-                       aria-expanded="false">{{ i.name|upper }}</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        {% for obj in i.children.all %}
-                            {% if not obj.children.all %}
-                                <li>
-                                    <a class="dropdown-item" href="{{ obj.get_absolute_url }}">{{ obj.name|upper }}</a>
-                                </li>
-                            {% else %}
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle"
-                                       href="{{ obj.get_absolute_url }}">{{ obj.name|upper }}</a>
-                                    <ul class="dropdown-menu">
-                                        {% for subobj in obj.children.all %}
-                                            {% if not subobj.children.all %}
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ subobj.get_absolute_url }}">{{ subobj.name|upper }}</a>
-                                                </li>
-                                            {% else %}
-                                                <li class="dropdown-submenu">
-                                                    <a class="dropdown-item dropdown-toggle"
-                                                       href="{{ subobj.get_absolute_url }}">{{ subobj.name|upper }}</a>
-                                                    <ul class="dropdown-menu">
-                                                        {% for lastobj in subobj.children.all %}
-                                                            <li>
-                                                                <a class="dropdown-item" href="{{ lastobj.get_absolute_url }}">{{ lastobj.name|upper }}</a>
-                                                            </li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase"
-               href="{% url 'cart:cart-view' %}"> <i class="fa fa-shopping-cart" aria-hidden="true"> </i> Cart
-                <span id="lblCartCount" class="badge badge-warning ">
-                    {% with cart_qty=cart|length %}
-                        {% if cart_qty > 0 %}
-                            {{ cart_qty }}
-                        {% else %}
-                            0
-                        {% endif %}
-                    {% endwith %}
-                </span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" href="#"><i class="fa-solid fa-circle-user me-1"></i> Account</a>
-        </li>
-    </ul>
-</div>
-</div>
 </nav>
 {% block content %}
 {% endblock content %}
 </body>
-<script src="{% static 'script/script.js'%}"></script>
-<script src="{% static 'script/ajax.js'%}"></script>
+<script type="module" src="{% static 'script/script.js'%}"></script>
+<script type="module" src="{% static 'script/ajax.js'%}"></script>
 </html>

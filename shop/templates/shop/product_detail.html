@@ -39,7 +39,7 @@
                                 <div class="col-6">
                                     <label for="select">Количество</label>
                                     &nbsp;
-                                    <select id="select">
+                                    <select id="select_quantity">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -51,7 +51,6 @@
                                             id="add-button"
                                             value="{{ product.id }}"
                                             data-url="{% url "cart:add-to-cart" %}"
-                                            data-csrf="{{ csrf_token }}"
                                             class="btn btn-outline-success btn-md">Добавить в корзину</button>
                                 </div>
                             </div>

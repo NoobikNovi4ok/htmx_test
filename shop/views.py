@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView
 
 from shop.models import Category, ProductProxy
 
@@ -8,9 +9,14 @@ def products_view(request):
     return render(request, "shop/products.html", {"products": products})
 
 
-def products_detail_view(request, slug):
-    product = get_object_or_404(ProductProxy, slug=slug)
-    return render(request, "shop/product_detail.html", {"product": product})
+class ProductsDetailView(DetailView):
+    model = ProductProxy
+    context_object_name = "product"
+    template_name = "shop/product_detail.html"
+    slug_url_kwarg = "slug"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, slug=self.kwargs.get(self.slug_url_kwarg))
 
 
 def category_list(request, slug):
